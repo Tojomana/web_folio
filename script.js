@@ -1,4 +1,4 @@
-// Smooth scrolling for navigation links
+﻿// Smooth scrolling for navigation links
 document.addEventListener("DOMContentLoaded", function () {
   // Smooth scrolling
   document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
@@ -105,6 +105,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Add parallax effect to hero background
   addParallaxEffect();
+
+  // Add beautiful button click effect
+  enhanceButtons();
 });
 
 // Typing effect for hero subtitle
@@ -505,3 +508,114 @@ function optimizeAnimations() {
 
 // Initialize performance optimizations
 optimizeAnimations();
+
+function enhanceButtons() {
+  document.querySelectorAll('.btn').forEach(btn => {
+    if (!btn) return;
+    btn.style.position = btn.style.position || 'relative';
+    btn.style.overflow = 'hidden';
+    btn.style.willChange = 'transform';
+    btn.addEventListener('click', (e) => {
+      const rect = btn.getBoundingClientRect();
+      const ripple = document.createElement('span');
+      const size = Math.max(rect.width, rect.height) * 2;
+      ripple.style.position = 'absolute';
+      ripple.style.left = (e.clientX - rect.left - size/2) + 'px';
+      ripple.style.top = (e.clientY - rect.top - size/2) + 'px';
+      ripple.style.width = ripple.style.height = size + 'px';
+      ripple.style.background = 'radial-gradient(circle, rgba(255,255,255,0.32) 0%, rgba(255,255,255,0.06) 40%, transparent 60%)';
+      ripple.style.borderRadius = '50%';
+      ripple.style.transform = 'scale(0)';
+      ripple.style.opacity = '1';
+      ripple.style.pointerEvents = 'none';
+      ripple.style.transition = 'transform 600ms cubic-bezier(.2,.9,.3,1), opacity 600ms';
+      btn.appendChild(ripple);
+      requestAnimationFrame(()=> { ripple.style.transform = 'scale(1)'; ripple.style.opacity = '0'; });
+      setTimeout(()=> ripple.remove(), 700);
+
+      if (btn.animate) {
+        btn.animate([{transform: 'scale(1)'},{transform:'scale(0.98)'},{transform:'scale(1)'}], {duration:220, easing:'cubic-bezier(.2,.9,.3,1)'});
+      }
+
+      for (let i=0;i<6;i++){
+        const dot = document.createElement('span');
+        dot.className = 'btn-particle';
+        dot.style.position = 'absolute';
+        dot.style.left = (20 + Math.random()*60) + '%';
+        dot.style.top = (20 + Math.random()*20) + '%';
+        const s = (6 + Math.random()*8) + 'px';
+        dot.style.width = dot.style.height = s;
+        const colors = ['#fff','#ffd166','#4f7cff','#ff7aa2'];
+        dot.style.background = colors[Math.floor(Math.random()*colors.length)];
+        dot.style.opacity = '0.95';
+        dot.style.borderRadius = '50%';
+        dot.style.pointerEvents = 'none';
+        dot.style.transform = 'translateY(0) scale(1)';
+        dot.style.transition = 'transform 700ms ease, opacity 700ms';
+        btn.appendChild(dot);
+        setTimeout(()=> { dot.style.transform = 'translateY(-' + (80 + Math.random()*60) + 'px) scale(0.6)'; dot.style.opacity='0'; }, 30);
+        setTimeout(()=> dot.remove(), 900);
+      }
+    });
+  });
+}
+
+// THEME TOGGLE: light / dark with persistence + icon animation
+(function(){
+  const toggle = document.getElementById('themeToggle');
+  const body = document.body;
+  const saved = localStorage.getItem('theme');
+  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  let theme = saved || (prefersDark ? 'dark' : 'light');
+  
+  // Apply theme
+  body.setAttribute('data-theme', theme);
+  
+  // Helper: update icon with rotation animation
+  function updateIcon(t) {
+    if (!toggle) return;
+    const i = toggle.querySelector('i');
+    if (!i) return;
+    // Set new class
+    i.className = t === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+    // Trigger rotation animation
+    i.style.animation = 'none';
+    // Force reflow to restart animation
+    void i.offsetWidth;
+    i.style.animation = 'themeIconRotate 600ms cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards';
+  }
+  
+  // Add keyframes for icon rotation if not already present
+  if (!document.querySelector('style[data-theme-icon]')) {
+    const style = document.createElement('style');
+    style.setAttribute('data-theme-icon', 'true');
+    style.textContent = `
+      @keyframes themeIconRotate {
+        0% { transform: rotate(0deg) scale(1); opacity: 0.7; }
+        50% { transform: rotate(180deg) scale(1.1); }
+        100% { transform: rotate(360deg) scale(1); opacity: 1; }
+      }
+      #themeToggle i {
+        display: inline-block;
+        transition: transform 0.2s ease;
+      }
+    `;
+    document.head.appendChild(style);
+  }
+  
+  updateIcon(theme);
+  
+  // Add smooth transition class
+  setTimeout(()=> document.documentElement.classList.add('theme-transition'), 40);
+  
+  // Toggle listener
+  if (toggle) {
+    toggle.addEventListener('click', () => {
+      const current = body.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+      const next = current === 'dark' ? 'light' : 'dark';
+      body.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      updateIcon(next);
+    });
+  }
+})();
