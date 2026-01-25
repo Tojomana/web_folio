@@ -5,14 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Portfolio — Tojomanana RANDRIANANTENAINA</title>
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
       rel="stylesheet"
     />
     <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      href="assets/css/all.min.css"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="assets/css/devicon.min.css" />
   </head>
   <body data-theme="dark">
     <header class="header">
@@ -24,9 +25,9 @@
         <nav>
           <ul class="nav-links">
             <li><a href="#home">Accueil</a></li>
-            <li><a href="#projects">Projets</a></li>
-            <li><a href="#skills">Compétences</a></li>
+
             <li><a href="#about">À propos</a></li>
+            <li><a href="#skills">Compétences</a></li>
             <li><a href="#contact">Contact</a></li>
           </ul>
         </nav>
@@ -42,76 +43,18 @@
       <section id="home" class="hero">
         <div class="container hero-grid">
           <div class="hero-content">
-            <h1>Bonjour, je suis <span class="name">Tojomanana</span></h1>
+            <h1>Bonjour, je suis <span class="name">Tojomanana</span> 
+              <a href="https://github.com/Tojomana" target="_blank" rel="noopener" class="social-icon-inline" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            </h1>
             <p class="lead">Développeur web & ingénieur IA — objets connectés & sécurité.</p>
             <p class="hero-desc">Je conçois des expériences numériques modernes, des APIs scalables et des systèmes embarqués sécurisés. Je travaille avec Python, JavaScript, C/C++ et frameworks modernes.</p>
             <div class="hero-cta">
-              <a class="btn" href="#projects">Voir mes projets</a>
+              <a class="btn" href="#skills">Mes compétences</a>
               <a class="btn ghost" href="#contact">Me contacter</a>
             </div>
           </div>
-          <div class="hero-card">
-            <img src="profile.jpg" alt="Photo Tojomanana" class="profile-image" />
-            <ul class="social">
-              <li><a href="https://github.com/Tojomana" target="_blank" rel="noopener">GitHub</a></li>
-              <li><a href="#contact">Email</a></li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <section id="projects" class="section">
-        <div class="container">
-          <h2>Projets récents</h2>
-          <div class="projects-grid">
-            <article class="card">
-              <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='360'%3E%3Crect width='100%25' height='100%25' fill='%234169E1'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-size='28' fill='%23fff'%3EProjet 1%3C/text%3E%3C/svg%3E" alt="Projet 1"/>
-              <div class="card-body">
-                <h3>Plateforme IoT de surveillance</h3>
-                <p>Plateforme MQTT avec dashboard temps réel et alertes sécurisées.</p>
-                <a class="card-link" href="#contact">En savoir +</a>
-              </div>
-            </article>
-            <article class="card">
-              <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='360'%3E%3Crect width='100%25' height='100%25' fill='%231e3c72'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-size='28' fill='%23fff'%3EProjet 2%3C/text%3E%3C/svg%3E" alt="Projet 2"/>
-              <div class="card-body">
-                <h3>Modèle de prédiction</h3>
-                <p>Pipeline ML pour classification et déploiement léger sur edge.</p>
-                <a class="card-link" href="#contact">En savoir +</a>
-              </div>
-            </article>
-            <article class="card">
-              <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='360'%3E%3Crect width='100%25' height='100%25' fill='%230f3460'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-size='28' fill='%23fff'%3EProjet 3%3C/text%3E%3C/svg%3E" alt="Projet 3"/>
-              <div class="card-body">
-                <h3>App web sécurisée</h3>
-                <p>Application full-stack avec bonnes pratiques de sécurité et tests.</p>
-                <a class="card-link" href="#contact">En savoir +</a>
-              </div>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section id="skills" class="section">
-        <div class="container">
-          <h2>Compétences</h2>
-          <div class="skills-grid">
-            <div class="skill">
-              <h4>Langages</h4>
-              <p>Python · JavaScript · C/C++ · Java</p>
-            </div>
-            <div class="skill">
-              <h4>Frameworks</h4>
-              <p>React · Next.js · Django · TensorFlow</p>
-            </div>
-            <div class="skill">
-              <h4>Embarqué</h4>
-              <p>Raspberry Pi · ESP32 · Arduino</p>
-            </div>
-            <div class="skill">
-              <h4>Sécurité</h4>
-              <p>Tests d'intrusion · Chiffrement · Hardening</p>
-            </div>
+          <div class="hero-image-container">
+             <img src="profile.png" alt="Photo Tojomanana" class="profile-image" />
           </div>
         </div>
       </section>
@@ -123,15 +66,101 @@
         </div>
       </section>
 
+
+
+      <section id="skills" class="section">
+        <div class="container">
+          <h2>Compétences</h2>
+          <div class="skills-wrapper">
+            <!-- Backend & Langages -->
+            <div class="skill-category fade-in">
+              <h3><i class="fas fa-code"></i> Langages & Développement</h3>
+              <div class="skill-tags">
+                <span class="skill-tag"><img src="assets/icons/python-original.svg" alt="Python" /> Python</span>
+                <span class="skill-tag"><img src="assets/icons/javascript-original.svg" alt="JavaScript" /> JavaScript</span>
+                <span class="skill-tag"><img src="assets/icons/cplusplus-original.svg" alt="C++" /> C++</span>
+                <span class="skill-tag"><img src="assets/icons/java-original-wordmark.svg" alt="Java" /> Java</span>
+                <span class="skill-tag"><img src="assets/icons/latex-original.svg" alt="LaTeX" /> LaTeX</span>
+                <span class="skill-tag"><img src="assets/icons/html5-original-wordmark.svg" alt="HTML5" /> HTML5</span>
+                <span class="skill-tag"><img src="assets/icons/json-original.svg" alt="JSON" /> JSON</span>
+              </div>
+            </div>
+
+            <!-- Frontend -->
+            <div class="skill-category fade-in">
+              <h3><i class="fas fa-desktop"></i> Frontend</h3>
+              <div class="skill-tags">
+                 <span class="skill-tag"><img src="assets/icons/react-original.svg" alt="React" /> React</span>
+                 <span class="skill-tag"><img src="assets/icons/nextjs-original-wordmark.svg" alt="Next.js" /> Next.js</span>
+                 <span class="skill-tag"><img src="assets/icons/vuejs-original-wordmark.svg" alt="Vue.js" /> Vue.js</span>
+                 <span class="skill-tag"><img src="assets/icons/tailwindcss-original-wordmark.svg" alt="TailwindCSS" /> Tailwind</span>
+                 <span class="skill-tag"><img src="assets/icons/flutter-original.svg" alt="Flutter" /> Flutter</span>
+              </div>
+            </div>
+
+            <!-- Data Science & IA -->
+            <div class="skill-category fade-in">
+              <h3><i class="fas fa-brain"></i> IA & Data Science</h3>
+              <div class="skill-tags">
+                <span class="skill-tag"><img src="assets/icons/jupyter-original.svg" alt="Jupyter" /> Jupyter</span>
+                <span class="skill-tag"><img src="assets/icons/scikitlearn-original.svg" alt="Scikit-Learn" /> Scikit-Learn</span>
+                <span class="skill-tag"><img src="assets/icons/tensorflow-original.svg" alt="TensorFlow" /> TensorFlow</span>
+                <span class="skill-tag"><img src="assets/icons/pandas-original-wordmark.svg" alt="Pandas" /> Pandas</span>
+                <span class="skill-tag"><img src="assets/icons/numpy-original.svg" alt="NumPy" /> NumPy</span>
+              </div>
+            </div>
+
+            <!-- Backend, DB & Tools -->
+            <div class="skill-category fade-in">
+              <h3><i class="fas fa-server"></i> Backend & Outils</h3>
+              <div class="skill-tags">
+                <span class="skill-tag"><img src="assets/icons/django-plain-wordmark.svg" alt="Django" /> Django</span>
+                <span class="skill-tag"><img src="assets/icons/flask-original.svg" alt="Flask" /> Flask</span>
+                <span class="skill-tag"><img src="assets/icons/nodejs-original-wordmark.svg" alt="Node.js" /> Node.js</span>
+                <span class="skill-tag"><img src="assets/icons/sqlite-original.svg" alt="SQLite" /> SQLite</span>
+                <span class="skill-tag"><img src="assets/icons/bun-original.svg" alt="Bun" /> Bun</span>
+                <span class="skill-tag"><img src="assets/icons/git-original.svg" alt="Git" /> Git</span>
+                 <span class="skill-tag"><img src="assets/icons/docker-plain.svg" alt="Docker" /> Docker</span>
+                 <span class="skill-tag"><img src="assets/icons/jenkins-original.svg" alt="Jenkins" /> Jenkins</span>
+                  <span class="skill-tag"><img src="assets/icons/trello-original-wordmark.svg" alt="Trello" /> Trello</span>
+              </div>
+            </div>
+
+            <!-- IoT & Hardware -->
+            <div class="skill-category fade-in">
+              <h3><i class="fas fa-microchip"></i> IoT & Embarqué</h3>
+              <div class="skill-tags">
+                <span class="skill-tag"><img src="assets/icons/arduino-original.svg" alt="Arduino" /> Arduino</span>
+                <span class="skill-tag"><i class="fas fa-memory"></i> ESP32</span>
+                <span class="skill-tag"><img src="assets/icons/raspberrypi-original.svg" alt="Raspberry Pi" /> Raspberry Pi</span>
+                <span class="skill-tag"><i class="fas fa-wifi"></i> MQTT</span>
+              </div>
+            </div>
+
+            <!-- Security (kept from previous) -->
+            <div class="skill-category fade-in">
+              <h3><i class="fas fa-shield-alt"></i> Sécurité</h3>
+              <div class="skill-tags">
+                <span class="skill-tag"><i class="fas fa-user-secret"></i> Pentesting</span>
+                <span class="skill-tag"><i class="fas fa-lock"></i> Cryptographie</span>
+                <span class="skill-tag"><i class="fas fa-network-wired"></i> Sécurité Réseau</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+
       <section id="contact" class="section">
         <div class="container">
           <h2>Contact</h2>
           <div class="contact-grid">
             <div class="contact-card">
               <h3>Coordonnées</h3>
-              <p>Email: <a href="mailto:tojomananarandrianantenaina@gmail.com">tojomananarandrianantenaina@gmail.com</a></p>
+              <p>Email: <a href="mailto:tojomanarandrianantenaina@gmail.com">tojomanarandrianantenaina@gmail.com</a></p>
               <p>Téléphone: +261 34 33 650 50</p>
-              <p>GitHub: <a href="https://github.com/Tojomana" target="_blank" rel="noopener">github.com/Tojomana</a></p>
+
             </div>
             <form id="contactForm" class="contact-form">
               <label for="name">Nom</label>

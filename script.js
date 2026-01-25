@@ -34,14 +34,41 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // Header scroll effect
+  // Header scroll effect with debounce
+  // Smart Navbar (Hide on scroll down, Show on scroll up)
   const header = document.querySelector(".header");
+  let lastScrollY = window.scrollY;
+  let ticking = false;
+
   window.addEventListener("scroll", () => {
-    if (window.scrollY > 100) {
-      header.style.background = "rgba(0, 0, 0, 0.9)";
-      header.style.backdropFilter = "blur(15px)";
-    } else {
-      header.style.background = "rgba(0, 0, 0, 0.1)";
-      header.style.backdropFilter = "blur(10px)";
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        const currentScrollY = window.scrollY;
+        
+        // Always show header at the very top
+        if (currentScrollY < 10) {
+           header.classList.remove("header-hidden");
+           header.style.background = "rgba(255,255,255,0.8)";
+           header.style.boxShadow = "none";
+        } else {
+           // Basic style for scrolled state
+           header.style.background = "rgba(255,255,255,0.95)";
+           header.style.boxShadow = "0 2px 10px rgba(0,0,0,0.05)";
+           
+           // Hide/Show logic
+           if (currentScrollY > lastScrollY && currentScrollY > 100) {
+             // Scrolling DOWN -> Hide
+             header.classList.add("header-hidden");
+           } else {
+             // Scrolling UP -> Show
+             header.classList.remove("header-hidden");
+           }
+        }
+
+        lastScrollY = currentScrollY;
+        ticking = false;
+      });
+      ticking = true;
     }
   });
 
@@ -53,14 +80,41 @@ document.addEventListener("DOMContentLoaded", function () {
 
       const name = document.getElementById("name").value;
       const email = document.getElementById("email").value;
-      const subject = document.getElementById("subject").value;
       const message = document.getElementById("message").value;
+      // const subject = document.getElementById("subject").value; // Removed as not in HTML form
 
-      // Validate form
-      if (!name || !email || !subject || !message) {
-        alert("Veuillez remplir tous les champs du formulaire.");
+      // Validate form with visual feedback
+      let isValid = true;
+      const inputs = [
+        { el: document.getElementById("name"), val: name },
+        { el: document.getElementById("email"), val: email, regex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/ },
+        { el: document.getElementById("message"), val: message }
+      ];
+
+      inputs.forEach(item => {
+        if (!item.el) return;
+         if (!item.val || (item.regex && !item.regex.test(item.val))) {
+          item.el.classList.add("invalid");
+          item.el.classList.remove("valid");
+          isValid = false;
+          
+          // Remove invalid class on input
+          item.el.addEventListener('input', function() {
+              this.classList.remove('invalid');
+          }, { once: true });
+          
+        } else {
+          item.el.classList.remove("invalid");
+          item.el.classList.add("valid");
+        }
+      });
+
+      if (!isValid) {
+        showNotification("Veuillez corriger les erreurs dans le formulaire.", "error");
         return;
       }
+      
+
 
       // Validate email format
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -70,9 +124,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       // Create mailto link
-      const mailtoLink = `mailto:tojomananarandrianantenaina@gmail.com?subject=${encodeURIComponent(
-        subject
-      )}&body=${encodeURIComponent(
+      const mailtoLink = `mailto:tojomanarandrianantenaina@gmail.com?subject=Contact Portfolio&body=${encodeURIComponent(
         `Nom: ${name}\nEmail: ${email}\n\nMessage:\n${message}`
       )}`;
 
@@ -259,96 +311,50 @@ function animateSkills() {
 }
 
 // Mobile menu functionality
+// Mobile menu functionality
 function initMobileMenu() {
-  const nav = document.querySelector(".nav");
+  const btn = document.querySelector(".mobile-menu-btn");
   const navLinks = document.querySelector(".nav-links");
+  const icon = btn ? btn.querySelector("i") : null;
 
-  // Create mobile menu button
-  const mobileMenuBtn = document.createElement("button");
-  mobileMenuBtn.className = "mobile-menu-btn";
-  mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
-  mobileMenuBtn.style.cssText = `
-        display: none;
-        background: none;
-        border: none;
-        color: white;
-        font-size: 1.5rem;
-        cursor: pointer;
-        padding: 0.5rem;
-    `;
-
-  nav.appendChild(mobileMenuBtn);
-
-  // Toggle mobile menu
-  mobileMenuBtn.addEventListener("click", () => {
-    navLinks.classList.toggle("nav-links-mobile");
-    const icon = mobileMenuBtn.querySelector("i");
-    icon.className = navLinks.classList.contains("nav-links-mobile")
-      ? "fas fa-times"
-      : "fas fa-bars";
-  });
-
-  // Close mobile menu when clicking on a link
-  navLinks.querySelectorAll("a").forEach((link) => {
-    link.addEventListener("click", () => {
-      navLinks.classList.remove("nav-links-mobile");
-      const icon = mobileMenuBtn.querySelector("i");
-      icon.className = "fas fa-bars";
+  if (btn && navLinks) {
+    btn.addEventListener("click", () => {
+      navLinks.classList.toggle("nav-open");
+      
+      // Toggle icon
+      if (icon) {
+        if (navLinks.classList.contains("nav-open")) {
+          icon.classList.remove("fa-bars");
+          icon.classList.add("fa-times");
+        } else {
+          icon.classList.remove("fa-times");
+          icon.classList.add("fa-bars");
+        }
+      }
     });
-  });
 
-  // Add mobile styles
-  const mobileStyle = document.createElement("style");
-  mobileStyle.textContent = `
-        @media (max-width: 768px) {
-            .mobile-menu-btn {
-                display: block !important;
-            }
-            
-            .nav-links {
-                position: fixed;
-                top: 70px;
-                right: -100%;
-                width: 100%;
-                height: calc(100vh - 70px);
-                background: rgba(0, 0, 0, 0.95);
-                backdrop-filter: blur(10px);
-                flex-direction: column;
-                justify-content: flex-start;
-                align-items: center;
-                padding-top: 2rem;
-                transition: right 0.3s ease;
-                z-index: 999;
-            }
-            
-            .nav-links-mobile {
-                right: 0 !important;
-            }
-            
-            .nav-links li {
-                margin: 1rem 0;
-            }
-            
-            .nav-links a {
-                font-size: 1.2rem;
-                padding: 1rem;
-                display: block;
-                text-align: center;
-            }
+    // Close menu when clicking links
+    navLinks.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", () => {
+        navLinks.classList.remove("nav-open");
+        if (icon) {
+          icon.classList.remove("fa-times");
+          icon.classList.add("fa-bars");
         }
-        
-        @keyframes slideInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+      });
+    });
+    
+    // Close when clicking outside
+    document.addEventListener("click", (e) => {
+      if (!navLinks.contains(e.target) && !btn.contains(e.target) && navLinks.classList.contains("nav-open")) {
+        navLinks.classList.remove("nav-open");
+        if (icon) {
+          icon.classList.remove("fa-times");
+          icon.classList.add("fa-bars");
         }
-    `;
-  document.head.appendChild(mobileStyle);
+      }
+    });
+  }
 }
 
 // Scroll to top functionality
@@ -537,7 +543,7 @@ function enhanceButtons() {
         btn.animate([{transform: 'scale(1)'},{transform:'scale(0.98)'},{transform:'scale(1)'}], {duration:220, easing:'cubic-bezier(.2,.9,.3,1)'});
       }
 
-      for (let i=0;i<6;i++){
+      for (let i=0;i<3;i++){ // Reduced from 6 to 3 particles for performance
         const dot = document.createElement('span');
         dot.className = 'btn-particle';
         dot.style.position = 'absolute';
